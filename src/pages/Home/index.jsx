@@ -1,8 +1,18 @@
+import { useEffect, useState } from "react";
+import ProductCart from "../../components/ProductCart";
+
 const Home = () => {
-    return <>
-    <h1>home</h1>
-    </>;
-  };
-  
-  export default Home;
-  
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    fetch("product.json")
+      .then((res) => res.json())
+      .then((data) => setProducts(data));
+  }, []);
+  return <>
+     {
+      products?.map(product =>  <ProductCart productData={product}></ProductCart>)
+     }
+  </>;
+};
+
+export default Home;
