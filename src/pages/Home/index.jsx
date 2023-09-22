@@ -8,11 +8,15 @@ const Home = () => {
       .then((res) => res.json())
       .then((data) => setProducts(data));
   }, []);
-  return <>
-     {
-      products?.map(product =>  <ProductCart productData={product}></ProductCart>)
-     }
-  </>;
+  return (
+    <>
+      <section className="grid grid-cols-3 gap-4">
+        {products?.map((product) => (
+          <ProductCart key={product.id} productData={product}></ProductCart>
+        ))}
+      </section>
+    </>
+  );
 };
 
 export default Home;
