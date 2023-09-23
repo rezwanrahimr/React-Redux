@@ -3,6 +3,7 @@ import ProductCart from "../ProductCart";
 
 const Cart = () => {
   const cartItems = useSelector((state) => state);
+  console.log(cartItems);
 
   return (
     <div className="grid grid-cols-3 gap-4">
