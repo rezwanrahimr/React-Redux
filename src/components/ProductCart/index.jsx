@@ -16,7 +16,11 @@ const ProductCart = ({ productData }) => {
           <img src={productData?.image} alt="Shoes" />
         </figure>
         <div className="card-body">
-          <h2 className="card-title">{productData?.model}</h2>
+          <h2 className="card-title">
+            {productData?.model}
+
+            <div className="badge badge-secondary">{productData?.quantity}</div>
+          </h2>
           {productData?.keyFeature?.map((feature) => (
             <p>{feature}</p>
           ))}
