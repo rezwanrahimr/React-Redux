@@ -2,8 +2,8 @@ import { ADD_TO_CART, REMOVE_TO_CART } from "../actionTypes/actionTypes";
 
 const initialState = { cart: [] };
 export const productReducer = (state = initialState, action) => {
-  const cartItem = state.cart.find((item) => item.id === action.payload.id);
-  const cartItemFilter = state.cart.filter(
+  const cartItem = state.cart?.find((item) => item.id === action.payload.id);
+  const cartItemFilter = state.cart?.filter(
     (item) => item.id !== action.payload.id
   );
   switch (action.type) {
@@ -38,6 +38,6 @@ export const productReducer = (state = initialState, action) => {
       };
 
     default:
-      state;
+      return state;
   }
 };

@@ -3,6 +3,7 @@ import Home from "../pages/Home/index";
 import MainLayout from "../layout";
 import Products from "../components/Products";
 import Cart from "../components/Cart/Cart";
+import DashboardLayout from "../layout/DashboardLayout";
 
 export const router = createBrowserRouter([
   {
@@ -21,6 +22,15 @@ export const router = createBrowserRouter([
         path: "/cart",
         element: <Cart></Cart>,
       },
+    ],
+  },
+  {
+    path: "/Dashboard",
+    element: <DashboardLayout></DashboardLayout>,
+    children: [
+      // {
+      //   path:
+      // }
     ],
   },
 ]);

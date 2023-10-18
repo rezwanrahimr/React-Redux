@@ -9,7 +9,7 @@ const Cart = () => {
     <div className="grid grid-cols-3 gap-4">
       {cartItems &&
         cartItems
-          ?.sort((a, b) => a - b)
+          ?.sort((a, b) => a.id - b.id)
           .map((product) => (
             <ProductCart key={product.id} productData={product}></ProductCart>
           ))}
