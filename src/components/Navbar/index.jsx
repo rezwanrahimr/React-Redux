@@ -3,7 +3,7 @@ import Logo from "../../assets/logo/logo.png";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
-  const cartItems = useSelector((state) => state);
+  const cartItems = useSelector((state) => state.product.cart);
   console.log(cartItems);
   const navItems = (
     <>
@@ -111,7 +111,7 @@ const Navbar = () => {
                     />
                   </svg>
                   <span className="badge badge-sm indicator-item">
-                    {cartItems?.cart?.length > 0 ? cartItems?.cart?.length : 0}
+                    {cartItems?.length > 0 ? cartItems?.length : 0}
                   </span>
                 </div>
               </label>
@@ -121,7 +121,7 @@ const Navbar = () => {
               >
                 <div className="card-body">
                   <span className="font-bold text-lg">
-                    {cartItems?.cart?.length} Items
+                    {cartItems?.length} Items
                   </span>
                   {/* <span className="text-info">Subtotal: $999</span> */}
                   <div className="card-actions">

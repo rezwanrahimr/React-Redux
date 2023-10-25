@@ -1,4 +1,4 @@
-import { AMD, INTEL } from "../actionTypes/filterActionTypes";
+import { AMD, INTEL, IN_STOCK } from "../actionTypes/filterActionTypes";
 
 const initialState = {
   brands: [],
@@ -37,6 +37,12 @@ export const FilterReducer = (state = initialState, action) => {
           ...state,
           brands: [...state.brands, action.payload],
         };
+      }
+
+    case IN_STOCK:
+      return {
+        ...state,
+        stock: !state.stock,
       }
 
     default:

@@ -1,6 +1,6 @@
-import { ADD_TO_CART, REMOVE_TO_CART } from "../actionTypes/actionTypes";
+import { ADD_TO_CART, PRODUCT_LOADING, PRODUCT_LOADING_ERROR, PRODUCT_LOADING_SUCCESS, REMOVE_TO_CART } from "../actionTypes/actionTypes";
 
-const initialState = { cart: [] };
+const initialState = { loading: false, cart: [], products: [] };
 export const productReducer = (state = initialState, action) => {
   const cartItem = state.cart?.find((item) => item.id === action.payload.id);
   const cartItemFilter = state.cart?.filter(
@@ -36,6 +36,28 @@ export const productReducer = (state = initialState, action) => {
         ...state,
         cart: [...cartItemFilter],
       };
+
+    case PRODUCT_LOADING:
+      return {
+        ...state,
+        loading: true
+      }
+
+
+    case PRODUCT_LOADING_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        products: action.payload
+      }
+
+
+    case PRODUCT_LOADING_ERROR:
+      return {
+        ...state,
+        loading: false,
+
+      }
 
     default:
       return state;

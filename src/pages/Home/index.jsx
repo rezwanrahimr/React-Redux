@@ -1,51 +1,59 @@
 import { useEffect, useState } from "react";
 import ProductCart from "../../components/ProductCart";
 import { useDispatch, useSelector } from "react-redux";
-import { AMD, INTEL } from "../../redux/actionTypes/filterActionTypes";
+import { AMD, INTEL, IN_STOCK } from "../../redux/actionTypes/filterActionTypes";
+import ProductLoading from "../../redux/thunk/ProductThunk/ProductLoading";
 
 const Home = () => {
-  const [products, setProducts] = useState([]);
   const stateValue = useSelector((state) => state);
+  const {products} = stateValue.product;
   const { brands, stock } = stateValue.filter;
   const dispatch = useDispatch();
   useEffect(() => {
-    fetch("product.json")
-      .then((res) => res.json())
-      .then((data) => setProducts(data));
+    dispatch(ProductLoading())
   }, []);
 
-  useEffect(() => {
-    let updatePoduct = [];
-    if (brands?.length > 0) {
-      brands.forEach((element) => {
-        const filterProduct = products?.filter((product) =>
-          product.brand.includes(element)
-        );
-        updatePoduct.push(...filterProduct);
-      });
-      setProducts(updatePoduct);
-    }
-  }, [brands?.length, stock]);
+  let content;
+
+  if (products.length) {
+    content = products?.map((product) => (
+      <ProductCart key={product.id} productData={product}></ProductCart>
+    ))
+  }
+
+  if (products.length && (stock || brands.length)) {
+    content = products.filter(product => {
+      if (stock) {
+        return product.status === true;
+      }
+      return product
+    }).filter(product => {
+      if (brands.length) {
+        return brands.includes(product.brand);
+      }
+      return product
+    }).map((product) => (
+      <ProductCart key={product.id} productData={product}></ProductCart>
+    ))
+  }
 
   return (
     <>
       <section className="flex justify-end m-3">
         <div className="btn-group">
-          <button className="btn ">Stock</button>
+          <button className={`btn ${stock === true ? 'btn-active' : ""}`} onClick={() => dispatch({ type: IN_STOCK })}>Stock</button>
           <button
-            className={`btn ${
-              brands.find((brand) => brand.includes("intel"))
-                ? "btn-active"
-                : ""
-            }`}
+            className={`btn ${brands.find((brand) => brand.includes("intel"))
+              ? "btn-active"
+              : ""
+              }`}
             onClick={() => dispatch({ type: INTEL, payload: "intel" })}
           >
             Intel
           </button>
           <button
-            className={`btn ${
-              brands.find((brand) => brand.includes("amd")) ? "btn-active" : ""
-            }`}
+            className={`btn ${brands.find((brand) => brand.includes("amd")) ? "btn-active" : ""
+              }`}
             onClick={() => dispatch({ type: AMD, payload: "amd" })}
           >
             AMD
@@ -53,9 +61,7 @@ const Home = () => {
         </div>
       </section>
       <section className="grid grid-cols-3 gap-4">
-        {products?.map((product) => (
-          <ProductCart key={product.id} productData={product}></ProductCart>
-        ))}
+        {content}
       </section>
     </>
   );

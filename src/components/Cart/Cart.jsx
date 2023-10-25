@@ -2,8 +2,7 @@ import { useSelector } from "react-redux";
 import ProductCart from "../ProductCart";
 
 const Cart = () => {
-  const cartItems = useSelector((state) => state?.cart);
-  console.log(cartItems);
+  const cartItems = useSelector((state) => state?.product.cart);
 
   return (
     <div className="grid grid-cols-3 gap-4">
